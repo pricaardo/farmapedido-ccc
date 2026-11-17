@@ -6,6 +6,14 @@
   text-rendering: optimizeLegibility;
 }
 
+html[data-font-scale="1"] {
+  font-size: 112.5%;
+}
+
+html[data-font-scale="2"] {
+  font-size: 125%;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -30,10 +38,106 @@ select {
   cursor: pointer;
 }
 
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex="-1"]:focus-visible {
+  outline: 3px solid #d88a00;
+  outline-offset: 3px;
+}
+
 .triage-dashboard {
   width: min(1120px, calc(100% - 48px));
   margin: 0 auto;
   padding: 46px 0 28px;
+}
+
+.skip-link {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  left: 8px;
+  padding: 10px 14px;
+  transform: translateY(-150%);
+  border-radius: 8px;
+  color: #fff;
+  background: #173847;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.accessibility-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin: -8px 0 22px;
+  padding: 11px 13px;
+  border: 1px solid #dce8e4;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.accessibility-tools > strong {
+  margin-right: 3px;
+  color: #49616a;
+  font-size: 0.78rem;
+}
+
+.accessibility-button,
+.accessibility-reset {
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid #d7e3df;
+  border-radius: 8px;
+  color: #35545e;
+  background: #fff;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.accessibility-button:hover:not(:disabled),
+.accessibility-reset:hover:not(:disabled) {
+  border-color: #16836f;
+  background: #f0f8f5;
+}
+
+.accessibility-button[aria-pressed="true"] {
+  border-color: #16836f;
+  color: #116d5d;
+  background: #e7f5f0;
+}
+
+.accessibility-button:disabled,
+.accessibility-reset:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.font-size-tools {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.font-size-tools span {
+  min-width: 46px;
+  color: #667b82;
+  text-align: center;
+  font-size: 0.72rem;
+}
+
+.font-size-button {
+  min-width: 38px;
+}
+
+.accessibility-reset {
+  margin-left: auto;
+  color: #667b82;
 }
 
 .dashboard-header {
@@ -506,6 +610,160 @@ select {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+html[data-high-contrast="true"] body {
+  color: #fff;
+  background: #000;
+}
+
+html[data-high-contrast="true"] .triage-dashboard,
+html[data-high-contrast="true"] .dashboard-header h1,
+html[data-high-contrast="true"] .orders-heading h2,
+html[data-high-contrast="true"] .section-heading h2,
+html[data-high-contrast="true"] .order-title-row h3,
+html[data-high-contrast="true"] .summary-card strong,
+html[data-high-contrast="true"] .empty-state h3 {
+  color: #fff;
+}
+
+html[data-high-contrast="true"] .dashboard-header p,
+html[data-high-contrast="true"] .section-heading p,
+html[data-high-contrast="true"] .summary-label,
+html[data-high-contrast="true"] .summary-footnote,
+html[data-high-contrast="true"] .order-number,
+html[data-high-contrast="true"] .detail-label,
+html[data-high-contrast="true"] .order-details,
+html[data-high-contrast="true"] .empty-state p,
+html[data-high-contrast="true"] .dashboard-footer {
+  color: #f1f1f1;
+}
+
+html[data-high-contrast="true"] .brand-eyebrow,
+html[data-high-contrast="true"] .section-kicker {
+  color: #7fffd4;
+}
+
+html[data-high-contrast="true"] .summary-card,
+html[data-high-contrast="true"] .orders-panel,
+html[data-high-contrast="true"] .order-form-panel,
+html[data-high-contrast="true"] .order-card {
+  border-color: #fff;
+  background: #090909;
+  box-shadow: none;
+}
+
+html[data-high-contrast="true"] .order-card:hover {
+  border-color: #ffeb3b;
+}
+
+html[data-high-contrast="true"] .filter-bar select,
+html[data-high-contrast="true"] .order-status-control select,
+html[data-high-contrast="true"] .order-form input,
+html[data-high-contrast="true"] .order-form select,
+html[data-high-contrast="true"] .search-field {
+  border-color: #fff;
+  color: #fff;
+  background-color: #000;
+}
+
+html[data-high-contrast="true"] .search-field input {
+  color: #fff;
+}
+
+html[data-high-contrast="true"] .search-field input::placeholder {
+  color: #ddd;
+}
+
+html[data-high-contrast="true"] .button-primary {
+  color: #000;
+  background: #ffeb3b;
+  box-shadow: none;
+}
+
+html[data-high-contrast="true"] .button-primary:hover:not(:disabled) {
+  background: #fff176;
+}
+
+html[data-high-contrast="true"] .button-secondary,
+html[data-high-contrast="true"] .accessibility-button,
+html[data-high-contrast="true"] .accessibility-reset {
+  border-color: #fff;
+  color: #fff;
+  background: #000;
+}
+
+html[data-high-contrast="true"] .accessibility-button[aria-pressed="true"] {
+  border-color: #ffeb3b;
+  color: #ffeb3b;
+}
+
+html[data-high-contrast="true"] .accessibility-tools {
+  border-color: #fff;
+  background: #090909;
+}
+
+html[data-high-contrast="true"] .accessibility-tools > strong,
+html[data-high-contrast="true"] .font-size-tools span {
+  color: #fff;
+}
+
+html[data-high-contrast="true"] .results-count,
+html[data-high-contrast="true"] .item-chip {
+  color: #fff;
+  background: #222;
+}
+
+html[data-high-contrast="true"] .item-chip b {
+  color: #7fffd4;
+}
+
+html[data-high-contrast="true"] .priority-badge,
+html[data-high-contrast="true"] .status-badge {
+  border: 1px solid currentColor;
+  color: #ffeb3b;
+  background: #000;
+}
+
+html[data-high-contrast="true"] .priority-alta,
+html[data-high-contrast="true"] .status-pendente {
+  color: #ff8a80;
+}
+
+html[data-high-contrast="true"] .status-em_conferencia {
+  color: #80d8ff;
+}
+
+html[data-high-contrast="true"] .priority-baixa,
+html[data-high-contrast="true"] .status-atendido {
+  color: #7fffd4;
+}
+
+html[data-high-contrast="true"] .empty-state-icon {
+  border: 1px solid #7fffd4;
+  color: #7fffd4;
+  background: #000;
+}
+
+html[data-high-contrast="true"] .empty-users,
+html[data-high-contrast="true"] .alert-error {
+  border-color: #ffeb3b;
+  color: #ffeb3b;
+  background: #000;
+}
+
+html[data-high-contrast="true"] .empty-users a {
+  color: #7fffd4;
+}
+
+html[data-high-contrast="true"] .skip-link {
+  border: 2px solid #ffeb3b;
+  color: #000;
+  background: #ffeb3b;
+}
+
+html[data-high-contrast="true"] :focus-visible {
+  outline-color: #ffeb3b;
 }
 
 @media (max-width: 900px) {

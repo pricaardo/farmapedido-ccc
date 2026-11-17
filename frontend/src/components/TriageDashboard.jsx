@@ -36,6 +36,8 @@ function mensagemErro(error, fallback) {
 export default function TriageDashboard() {
   const [pedidos, setPedidos] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
+  const [altoContraste, setAltoContraste] = useState(false);
+  const [escalaTexto, setEscalaTexto] = useState(0);
   const [loading, setLoading] = useState(true);
   const [atualizando, setAtualizando] = useState(false);
   const [salvando, setSalvando] = useState(false);
@@ -73,6 +75,16 @@ export default function TriageDashboard() {
   useEffect(() => {
     carregarDados(true);
   }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.dataset.highContrast = String(altoContraste);
+    root.dataset.fontScale = String(escalaTexto);
+    return () => {
+      delete root.dataset.highContrast;
+      delete root.dataset.fontScale;
+    };
+  }, [altoContraste, escalaTexto]);
 
   const pedidosFiltrados = useMemo(() => {
     const termo = busca.trim().toLocaleLowerCase('pt-BR');
@@ -147,6 +159,7 @@ export default function TriageDashboard() {
 
   return (
     <main className="triage-dashboard">
+      <a className="skip-link" href="#orders-list">Pular para a lista de pedidos</a>
       <header className="dashboard-header">
         <div>
           <div className="brand-eyebrow">FarmaPedido CCC</div>
@@ -170,6 +183,52 @@ export default function TriageDashboard() {
           </button>
         </div>
       </header>
+
+      <section className="accessibility-tools" aria-label="Opções de acessibilidade">
+        <strong>Acessibilidade</strong>
+        <button
+          className="accessibility-button"
+          type="button"
+          aria-pressed={altoContraste}
+          onClick={() => setAltoContraste((current) => !current)}
+        >
+          Alto contraste: {altoContraste ? 'ativado' : 'desativado'}
+        </button>
+        <div className="font-size-tools" role="group" aria-label="Tamanho do texto">
+          <button
+            className="accessibility-button font-size-button"
+            type="button"
+            aria-label="Diminuir tamanho do texto"
+            onClick={() => setEscalaTexto((current) => Math.max(0, current - 1))}
+            disabled={escalaTexto === 0}
+          >
+            A−
+          </button>
+          <span aria-live="polite">
+            {['Padrão', 'Grande', 'Maior'][escalaTexto]}
+          </span>
+          <button
+            className="accessibility-button font-size-button"
+            type="button"
+            aria-label="Aumentar tamanho do texto"
+            onClick={() => setEscalaTexto((current) => Math.min(2, current + 1))}
+            disabled={escalaTexto === 2}
+          >
+            A+
+          </button>
+        </div>
+        <button
+          className="accessibility-reset"
+          type="button"
+          onClick={() => {
+            setAltoContraste(false);
+            setEscalaTexto(0);
+          }}
+          disabled={!altoContraste && escalaTexto === 0}
+        >
+          Redefinir
+        </button>
+      </section>
 
       {erro && (
         <div className="alert-error" role="alert">
@@ -282,7 +341,7 @@ export default function TriageDashboard() {
         </article>
       </section>
 
-      <section className="orders-panel">
+      <section className="orders-panel" id="orders-list" tabIndex="-1">
         <div className="orders-heading">
           <div>
             <span className="section-kicker">Visão geral</span>
