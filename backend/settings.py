@@ -10,7 +10,7 @@ SECRET_KEY = 'django-insecure-chave-exemplo-para-testes'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 INSTALLED_APPS = [
@@ -20,8 +20,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework', # Essencial para o APIClient dos testes
-    'backend',
+    'rest_framework',
+    'corsheaders',
+    'core', # Mantemos apenas o core como app da aplicação
 ]
 
 TEMPLATES = [
@@ -41,6 +42,7 @@ TEMPLATES = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,8 +52,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'backend.urls' # Ajuste conforme as URLs do projeto
-AUTH_USER_MODEL = 'backend.Usuario'
+ROOT_URLCONF = 'backend.urls'
+
+# Ativamos o modelo de usuário customizado
+AUTH_USER_MODEL = 'core.Usuario'
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 DATABASES = {
     'default': {
@@ -60,7 +66,7 @@ DATABASES = {
     }
 }
 
-# Configuração exigida pelo Django REST Framework nos testes
+# Configuração exigida pelo Django REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
@@ -70,3 +76,8 @@ REST_FRAMEWORK = {
 
 STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
